@@ -1,7 +1,7 @@
 ﻿# vue service 项目
 
-for vue demo webservice 
+ Web service for vue demo
 
-java
+Use Java Spring MVC
 
 2017年11月1日.
