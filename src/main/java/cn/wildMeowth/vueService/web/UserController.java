@@ -9,10 +9,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.wildMeowth.vueService.entity.User;
+import cn.wildMeowth.vueService.entity.UserLogin;
 import cn.wildMeowth.vueService.service.PasswordException;
 import cn.wildMeowth.vueService.service.UserIdException;
 import cn.wildMeowth.vueService.service.UserService;
@@ -27,11 +29,14 @@ public class UserController {
 	@RequestMapping("/login.do")
 	@ResponseBody
 
-	public JsonResult<Map<String,String>> login(String id, String password, HttpServletResponse res) throws UserIdException, PasswordException, IOException {
+	public JsonResult<Map<String,String>> login(@RequestBody UserLogin userLogin, HttpServletResponse res) throws UserIdException, PasswordException, IOException {
+		String id = userLogin.getUsername();
+		String password = userLogin.getPassword();
 		User user = userService.login(id, password);
 		Map<String,String> userMap = new HashMap<String, String>();
 		userMap.put("id", user.getId());
 		userMap.put("name", user.getName());
+		userMap.put("token", user.getToken());
 		Cookie cookie = new Cookie("token", user.getToken());
 		cookie.setPath("/");
 		res.addCookie(cookie);
