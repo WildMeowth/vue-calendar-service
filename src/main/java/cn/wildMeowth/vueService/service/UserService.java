@@ -42,8 +42,8 @@ public class UserService {
 		if(user==null){
 			throw new UserIdException("û�и��û�");
 		}
-//		String md5 = Utils.crypt(password);
-		if(user.getPassword().equals(password)){
+		String md5 = Utils.crypt(password);
+		if(user.getPassword().equals(md5)){
 			//��½�ɹ�
 			return user;
 		}
